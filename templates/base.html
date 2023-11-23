@@ -12,7 +12,7 @@
 <body>
 
     <div id="mySidebar" class="sidebar" onmouseover="toggleSidebar()" onmouseout="toggleSidebar()">
-        <img href={% static 'images/4fitter_logo.png' %}>
+        <img src={% static 'images/4fitter_logo.png' %} alt="Logo" class="sidebar-logo" width="90px">
         <a hx-get="/calculator" hx-trigger="click" hx-target="#main" hx-swap="innerHTML"><span><i class="material-icons">calculate</i><span class="icon-text">&nbsp;&nbsp;&nbsp;&nbsp;Calculator</span></a><br>
         <a hx-get="/calendar" hx-trigger="click" hx-target="#main" hx-swap="innerHTML"><i class="material-icons">calendar_month</i><span class="icon-text"></span>&nbsp;&nbsp;&nbsp;&nbsp;Calendar</a></span></a><br>
         <a hx-get="/fridge" hx-trigger="click" hx-target="#main" hx-swap="innerHTML"><i class="material-icons">kitchen</i><span class="icon-text"></span>&nbsp;&nbsp;&nbsp;&nbsp;Fridge</span></a><br>

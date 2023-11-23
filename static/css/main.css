@@ -13,7 +13,7 @@ body {
     background-color: #146C94;
     overflow-x: hidden;
     transition: 0.5s;
-    padding-top: 60px;
+    padding-top: 10px;
     white-space: nowrap;
 }
 
@@ -53,6 +53,22 @@ body {
     padding: 16px;
     margin-left: 85px;
 }
+
+#main:before{
+    content: ' ';
+    display: block;
+    position: absolute;
+    left: 350px;
+    top: 0;
+    width: 60%;
+    height: 100%;
+    opacity: 0.05;
+    background-image: url('../images/4fitter_logo.png');
+    background-repeat: no-repeat;
+    background-position: center center; /* Center the background image */
+    background-size: cover;
+}
+
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
 
 @media screen and (max-height: 450px) {

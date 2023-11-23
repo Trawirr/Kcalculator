@@ -1,0 +1,55 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Style for the top bar */
+.topbar {
+    background-color: #3498db;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+}
+
+/* Style for the project name */
+.project-name {
+    font-size: 24px;
+}
+
+/* Style for the sidebar container */
+.sidebar-container {
+    display: flex;
+}
+
+/* Style for the sidebar */
+.sidebar {
+    background-color: #2c3e50;
+    color: #fff;
+    width: 120px; /* Set the width as desired */
+    min-height: 100vh; /* Ensure the sidebar stretches to the full height of the viewport */
+    font-size: 24px;
+    flex: 1;
+}
+
+/* Style for menu options */
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar li {
+    padding: 15px;
+    transition: width 0.3s ease; /* Add a transition for the width property */
+}
+
+/* Style for widening sidebar elements on hover */
+.sidebar li:hover {
+    width: 150px; /* Adjust the width as needed */
+}
+
+/* Style for the content */
+.content {
+    flex: 2; /* Take up twice as much space as the sidebar */
+    padding: 20px;
+}

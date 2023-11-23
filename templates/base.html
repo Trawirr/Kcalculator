@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href={% static 'css/main.css' %}>
+
+</head>
+
+<body>
+
+    <div id="mySidebar" class="sidebar" onmouseover="toggleSidebar()" onmouseout="toggleSidebar()">
+        <img href={% static 'images/4fitter_logo.png' %}>
+        <a hx-get="/calculator" hx-trigger="click" hx-target="#main" hx-swap="innerHTML"><span><i class="material-icons">calculate</i><span class="icon-text">&nbsp;&nbsp;&nbsp;&nbsp;Calculator</span></a><br>
+        <a hx-get="/calendar" hx-trigger="click" hx-target="#main" hx-swap="innerHTML"><i class="material-icons">calendar_month</i><span class="icon-text"></span>&nbsp;&nbsp;&nbsp;&nbsp;Calendar</a></span></a><br>
+        <a hx-get="/fridge" hx-trigger="click" hx-target="#main" hx-swap="innerHTML"><i class="material-icons">kitchen</i><span class="icon-text"></span>&nbsp;&nbsp;&nbsp;&nbsp;Fridge</span></a><br>
+        <a hx-get="/recipes" hx-trigger="click" hx-target="#main" hx-swap="innerHTML"><i class="material-icons">kitchen</i><span class="icon-text"></span>&nbsp;&nbsp;&nbsp;&nbsp;Fridge</span></a><br>
+        <!-- <a href="#"><i class="material-icons"></i><span class="icon-text"></span>&nbsp;&nbsp;&nbsp;&nbsp;contact<span></a> -->
+    </div>
+
+    <div id="main">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <script src="https://unpkg.com/htmx.org@1.9.9" integrity="sha384-QFjmbokDn2DjBjq+fM+8LUIVrAgqcNW2s0PjAxHETgRn9l4fvX31ZxDxvwQnyMOX" crossorigin="anonymous"></script>
+    <script>
+        var mini = true;
+
+        function toggleSidebar() {
+            if (mini) {
+                console.log("opening sidebar");
+                document.getElementById("mySidebar").style.width = "250px";
+                document.getElementById("main").style.marginLeft = "250px";
+                this.mini = false;
+            } else {
+                console.log("closing sidebar");
+                document.getElementById("mySidebar").style.width = "85px";
+                document.getElementById("main").style.marginLeft = "85px";
+                this.mini = true;
+            }
+        }
+    </script>
+
+</body>
+
+</html>

@@ -9,5 +9,5 @@ class FoodAdmin(admin.ModelAdmin):
     
 @admin.register(Drink)
 class Drink(admin.ModelAdmin):
-    list_display = ("name", "protein", "carbs", "fat", "kcal", "cup_factor")
+    list_display = ("name", "protein", "carbs", "fat", "kcal")
     ordering = ("name", "kcal")

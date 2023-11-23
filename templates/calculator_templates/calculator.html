@@ -1,16 +1,19 @@
-<h1>Calculator!</h1>
+<h1>Kcalculator</h1>
 
 <div>
-    <h1>Dynamic Input List</h1>
-    
     <div id="ingredients-list">
-        <!-- Initial input -->
+        <datalist id="ingredients-all">
+            {% for ingredient in ingredients %}
+                <option value="{{ ingredient }}">{{ ingredient }}</option>
+            {% endfor %}
+        </datalist>
         <div>
             <form id="ingredients-form">
-                <input type="text" name="ingredients[]" placeholder="Enter text"><br>
+                <input type="text" name="ingredients[]" list="ingredients-all" placeholder="ingredient">
+                <input type="text" name="volumes[]" placeholder="volume"><br>
                 <button hx-get="/calculator/add-ingredient" hx-trigger="click" hx-target="this" hx-swap="outerHTML">Add</button>
             </form>
-            <button hx-get="/calculator/calculate" hx-trigger="click" hx-target="#total" hx-swap="outerHTML" hx-include="#ingredients-form">Calculate</button>
+            <button hx-get="/calculator/calculate" hx-trigger="click" hx-target="#total" hx-swap="innerHTML" hx-include="#ingredients-form">Calculate</button>
             <hr>
             <p id="total">Total: 0</p>
         </div>

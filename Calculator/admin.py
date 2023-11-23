@@ -4,4 +4,5 @@ from .models import *
 # Register your models here.
 @admin.register(Ingredient)
 class IngredientAdmin(admin.ModelAdmin):
-    pass
+    list_display = ("name", "protein", "carbs", "fat")
+    ordering = ("name", )

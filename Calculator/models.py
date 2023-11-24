@@ -12,7 +12,7 @@ class Ingredient(models.Model):
     kcal = models.FloatField(default=0, verbose_name="kcal/100g_ml")
 
 class Food(Ingredient):
-    piece_factor = models.IntegerField(default=0, verbose_name="Avg piece weight")
+    piece_factor = models.FloatField(default=0, verbose_name="Avg piece weight")
 
 class Drink(Ingredient):
     pass

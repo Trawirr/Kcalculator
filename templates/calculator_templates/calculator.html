@@ -8,8 +8,11 @@
             {% endfor %}
         </datalist>
         <div>
-            <form id="ingredients-form">
-                <input class="ingredient-input" type="text" name="ingredients[]" list="ingredients-all" placeholder="ingredient">
+            <form id="ingredients-form"  hx-get="/calculator/calculate" hx-trigger="input change" hx-target="#total" hx-swap="innerHTML" hx-include="#ingredients-form">
+                <input 
+                    class="ingredient-input" type="text" name="ingredients[]" list="ingredients-all" placeholder="ingredient"
+                    hx-trigger="input" hx-get="/calculator/get-units" hx-target="next .unit-input" hx-swap="outerHTML" hx-include="this"
+                >
                 <input class="volume-input" type="text" name="volumes[]" placeholder="volume">
                 <input class="unit-input" type="text" name="units[]" placeholder="unit"><br>
                 <button hx-get="/calculator/add-ingredient" hx-trigger="click" hx-target="this" hx-swap="outerHTML">Add</button>

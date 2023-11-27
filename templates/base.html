@@ -11,7 +11,7 @@
 
 <body>
 
-    <div id="mySidebar" class="sidebar" onmouseover="toggleSidebar()" onmouseout="toggleSidebar()">
+    <div id="mySidebar" class="sidebar" onmouseover="toggleSidebar(true)" onmouseout="toggleSidebar(false)">
         <img src={% static 'images/4fitter_logo.png' %} alt="Logo" class="sidebar-logo" width="90px">
         <a hx-get="/calculator" hx-trigger="click" hx-target="#main" hx-swap="innerHTML"><span><i class="material-icons">calculate</i><span class="icon-text">&nbsp;&nbsp;&nbsp;&nbsp;Calculator</span></a><br>
         <a hx-get="/calendar" hx-trigger="click" hx-target="#main" hx-swap="innerHTML"><i class="material-icons">calendar_month</i><span class="icon-text"></span>&nbsp;&nbsp;&nbsp;&nbsp;Calendar</a></span></a><br>
@@ -29,8 +29,8 @@
     <script>
         var mini = true;
 
-        function toggleSidebar() {
-            if (mini) {
+        function toggleSidebar(mouse_in) {
+            if (mini && mouse_in) {
                 console.log("opening sidebar");
                 document.getElementById("mySidebar").style.width = "250px";
                 document.getElementById("main").style.marginLeft = "250px";

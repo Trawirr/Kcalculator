@@ -15,22 +15,64 @@ class Ingredient(models.Model):
     tbsp_factor = 15 # ml
     tsp_factor = 5 # ml
 
-    def get_units(self):
+    def get_units(self) -> list:
         return []
+    
+    def get_macro(self, volume: int, unit: str) -> dict:
+        pass
 
 class Food(Ingredient):
     piece_factor = models.FloatField(default=0, verbose_name="Avg piece weight")
     ml_factor = models.FloatField(default=0, verbose_name="ml/100g")
 
-    def get_units(self):
+    def get_units(self) -> list:
         units = ['g']
         if self.piece_factor > 0: units.append('pc')
         if self.ml_factor > 0: units += ['ml', 'tbsp', 'tsp']
         return units
+    
+    def get_macro(self, volume: int, unit: str) -> dict:
+        if unit in self.get_units():
+            values = {
+                "protein": 0,
+                "carbs": 0,
+                "fat": 0,
+                "kcal": 0,
+            }
+
+            # grams
+            if unit != 'g':
+                volume /= self.ml_factor
+                # other ml unit
+                if unit != 'ml':
+                    volume *= getattr(self, f"{unit}_factor")
+            
+            values['protein'] += self.protein * volume / 100
+            values['carbs'] += self.carbs * volume / 100
+            values['fat'] += self.fat * volume / 100
+            values['kcal'] += self.kcal * volume / 100
+        return values
 
 class Drink(Ingredient):
     
-    def get_units(self):
+    def get_units(self) -> list:
         return ['ml', 'cup', 'tbsp', 'tsp']
+    
+    def get_macro(self, volume: int, unit: str) -> dict:
+        if unit in self.get_units():
+            values = {
+                "protein": 0,
+                "carbs": 0,
+                "fat": 0,
+                "kcal": 0,
+            }
 
-    # --ADD-- methods for spoons, cups etc.
+            # other ml unit
+            if unit != 'ml':
+                volume *= getattr(self, f"{unit}_factor")
+            
+            values['protein'] += self.protein * volume / 100
+            values['carbs'] += self.carbs * volume / 100
+            values['fat'] += self.fat * volume / 100
+            values['kcal'] += self.kcal * volume / 100
+        return values

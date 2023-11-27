@@ -25,13 +25,13 @@ def calculate(request):
     }
 
     volumes = [int(v) for v in request.GET.getlist('volumes[]')]
+    units = [u for u in request.GET.getlist('units[]')]
     for i, ingredient in enumerate(request.GET.getlist("ingredients[]")):
-        print(ingredient, volumes[i])
+        print(ingredient, volumes[i], units[i])
         ingredient_object = get_ingredient(ingredient)
-        values['protein'] += ingredient_object.protein * volumes[i] / 100
-        values['carbs'] += ingredient_object.carbs * volumes[i] / 100
-        values['fat'] += ingredient_object.fat * volumes[i] / 100
-        values['kcal'] += ingredient_object.kcal * volumes[i] / 100
+        print(ingredient_object.get_macro(volumes[i], units[i]))
+        for k, v in ingredient_object.get_macro(volumes[i], units[i]).items():
+            values[k] += v
 
     return HttpResponse(f"<p>Kcal: {values['kcal']:.2f}, protein: {values['protein']:.2f}, carbs: {values['carbs']:.2f}, fat: {values['fat']:.2f}</p>")
 

@@ -1,4 +1,4 @@
-<h1>Kcalculator</h1>
+<h1>Recipes</h1>
 
 <div>
     <div id="ingredients-list">
@@ -9,14 +9,13 @@
         </datalist>
         <div>
             <form id="ingredients-form">
+                <input type="text" name="recipe-name" placeholder="recipe name"><br>
                 <input class="ingredient-input" type="text" name="ingredients[]" list="ingredients-all" placeholder="ingredient">
                 <input class="volume-input" type="text" name="volumes[]" placeholder="volume">
                 <input class="unit-input" type="text" name="units[]" placeholder="unit"><br>
                 <button hx-get="/calculator/add-ingredient" hx-trigger="click" hx-target="this" hx-swap="outerHTML">Add</button>
             </form>
-            <button hx-get="/calculator/calculate" hx-trigger="click" hx-target="#total" hx-swap="innerHTML" hx-include="#ingredients-form">Calculate</button>
-            <hr>
-            <p id="total">Total: -</p>
+            <button hx-get="/calculator/add-recipe" hx-trigger="click" hx-target="#total" hx-swap="innerHTML" hx-include="#ingredients-form">Save</button>
         </div>
     </div>
 

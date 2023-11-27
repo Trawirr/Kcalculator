@@ -34,3 +34,25 @@ def calculate(request):
         values['kcal'] += ingredient_object.kcal * volumes[i] / 100
 
     return HttpResponse(f"<p>Kcal: {values['kcal']:.2f}, protein: {values['protein']:.2f}, carbs: {values['carbs']:.2f}, fat: {values['fat']:.2f}</p>")
+
+def recipes_view(request):
+    print("Recipes view")
+    context = {
+        "ingredients": [f for f in Food.objects.all().values_list("name", flat=True)] + [d for d in Drink.objects.all().values_list("name", flat=True)]
+    }
+    print(context)
+    return render(request, 'calculator_templates/recipes.html', context)
+
+def add_recipe(request):
+    pass
+
+def get_units(request):
+    ingredient_name = request.GET.get("ingredients[]", "")
+    print(ingredient_name)
+    try:
+        ingredient = get_ingredient(ingredient_name)
+        print(ingredient)
+        return HttpResponse(f"""<input class="unit-input" type="text" name="units[]" placeholder="{', '.join(ingredient.get_units())}">""")
+    except Exception as e:
+        print(e)
+        return HttpResponse("""<input class="unit-input" type="text" name="units[]" placeholder="unit">""")

@@ -5,4 +5,7 @@ urlpatterns = [
     path('', views.main_view, name='calculator-main'),
     path('add-ingredient', views.add_ingredient, name='add-ingredient'),
     path('calculate', views.calculate, name='calculate'),
+    path('recipes', views.recipes_view, name='recipes'),
+    path('recipe', views.add_recipe, name='add-recipe'),
+    path('get-units', views.get_units, name='get-units'),
 ]

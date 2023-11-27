@@ -11,10 +11,26 @@ class Ingredient(models.Model):
     fat = models.FloatField(default=0, verbose_name="fat/100g_ml")
     kcal = models.FloatField(default=0, verbose_name="kcal/100g_ml")
 
+    cup_factor = 250 # ml
+    tbsp_factor = 15 # ml
+    tsp_factor = 5 # ml
+
+    def get_units(self):
+        return []
+
 class Food(Ingredient):
     piece_factor = models.FloatField(default=0, verbose_name="Avg piece weight")
+    ml_factor = models.FloatField(default=0, verbose_name="ml/100g")
+
+    def get_units(self):
+        units = ['g']
+        if self.piece_factor > 0: units.append('pc')
+        if self.ml_factor > 0: units += ['ml', 'tbsp', 'tsp']
+        return units
 
 class Drink(Ingredient):
-    pass
+    
+    def get_units(self):
+        return ['ml', 'cup', 'tbsp', 'tsp']
 
     # --ADD-- methods for spoons, cups etc.

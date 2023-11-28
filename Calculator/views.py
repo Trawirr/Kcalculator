@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from .models import *
 from .utils.utils import get_ingredient
+from django.views.decorators.csrf import csrf_exempt
 
 def main_view(request):
     print("Main view")
@@ -56,3 +57,7 @@ def get_units(request):
     except Exception as e:
         print(e)
         return HttpResponse("""<input class="unit-input" type="text" name="units[]" placeholder="unit">""")
+    
+@csrf_exempt
+def delete_row(request):
+    return HttpResponse('')

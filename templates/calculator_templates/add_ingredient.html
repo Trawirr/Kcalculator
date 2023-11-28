@@ -1,7 +1,10 @@
-<input 
+<div class="ingredients-row">
+    <input 
     class="ingredient-input" type="text" name="ingredients[]" list="ingredients-all" placeholder="ingredient"
     hx-trigger="input" hx-get="/calculator/get-units" hx-target="next .unit-input" hx-swap="outerHTML" hx-include="this"
->
-<input type="text" name="volumes[]" placeholder="volume">
-<input class="unit-input" type="text" name="units[]" placeholder="unit"><br>
+    >
+    <input class="volume-input" type="text" name="volumes[]" placeholder="volume">
+    <input class="unit-input" type="text" name="units[]" placeholder="unit">
+    <button hx-target="closest .ingredients-row" hx-swap="outerHTML" hx-delete="/calculator/delete-row">Delete</button><br>
+</div>
 <button hx-get="/calculator/add-ingredient" hx-trigger="click" hx-target="this" hx-swap="outerHTML">Add</button>

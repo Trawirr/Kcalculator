@@ -51,7 +51,7 @@ def add_recipe(request):
         recipe_piece = request.GET.get("recipe-piece", '0')
         new_recipe = Recipe(name=recipe_name, piece_factor=int(recipe_piece))
         new_recipe.save()
-        
+
         volumes = [int(v) for v in request.GET.getlist('volumes[]')]
         units = [u for u in request.GET.getlist('units[]')]
 
@@ -66,6 +66,9 @@ def add_recipe(request):
             new_recipe.ingredients.add(recipe_ingredient)
         return JsonResponse({'success': 1})
     except Exception as e:
+        new_recipe.delete()
+        for recipe_ingredient in recipe_ingredients:
+            recipe_ingredient.delete()
         print(e)
         return JsonResponse({'success': 0, 'error': str(e)})
 

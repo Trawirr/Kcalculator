@@ -12,16 +12,7 @@
                 <input type="text" name="recipe-name" placeholder="recipe name"><br>
                 <input type="text" name="recipe-piece" placeholder="piece weight"><br>
                 {% csrf_token %}
-                <div class="ingredients-row">
-                    <input 
-                    class="ingredient-input" type="text" name="ingredients[]" list="ingredients-all" placeholder="ingredient"
-                    hx-trigger="input" hx-get="/calculator/get-units" hx-target="next .unit-input" hx-swap="outerHTML" hx-include="this"
-                    >
-                    <input class="volume-input" type="text" name="volumes[]" placeholder="volume">
-                    <input class="unit-input" type="text" name="units[]" placeholder="unit">
-                    <button hx-target="closest .ingredients-row" hx-swap="outerHTML" hx-delete="/calculator/delete-row">Delete</button><br>
-                </div>
-                <button hx-get="/calculator/add-ingredient" hx-trigger="click" hx-target="this" hx-swap="outerHTML">Add</button>
+                <div hx-get="/calculator/add-ingredient" hx-trigger="load" hx-target="this" hx-swap="outerHTML"></div>
             </form>
             <button hx-get="/calculator/add-recipe" hx-trigger="click" hx-include="#ingredients-form">Save</button>
         </div>

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from .models import *
 from .utils.utils import get_ingredient
 from django.views.decorators.csrf import csrf_exempt
@@ -45,7 +45,29 @@ def recipes_view(request):
     return render(request, 'calculator_templates/recipes.html', context)
 
 def add_recipe(request):
-    pass
+    print("add recipe")
+    try:
+        recipe_name = request.GET.get("recipe-name")
+        recipe_piece = request.GET.get("recipe-piece", '0')
+        new_recipe = Recipe(name=recipe_name, piece_factor=int(recipe_piece))
+        new_recipe.save()
+        
+        volumes = [int(v) for v in request.GET.getlist('volumes[]')]
+        units = [u for u in request.GET.getlist('units[]')]
+
+        recipe_ingredients = []
+        for i, ingredient in enumerate(request.GET.getlist("ingredients[]")):
+            ingredient_object = get_ingredient(ingredient)
+            new_recipe_ingredient = RecipeIngredient(ingredient=ingredient_object, volume=volumes[i], unit=units[i])
+            recipe_ingredients.append(new_recipe_ingredient)
+
+        for recipe_ingredient in recipe_ingredients:
+            recipe_ingredient.save()
+            new_recipe.ingredients.add(recipe_ingredient)
+        return JsonResponse({'success': 1})
+    except Exception as e:
+        print(e)
+        return JsonResponse({'success': 0, 'error': str(e)})
 
 def get_units(request):
     ingredient_name = request.GET.get("ingredients[]", "")

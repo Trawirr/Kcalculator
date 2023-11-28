@@ -15,6 +15,9 @@ class Ingredient(models.Model):
     cup_factor = 250 # ml
     tbsp_factor = 15 # ml
     tsp_factor = 5 # ml
+    
+    def __str__(self) -> str:
+        return self.name
 
     def get_units(self) -> list:
         units = [self.default_unit]
@@ -50,10 +53,17 @@ class Ingredient(models.Model):
         return values
     
 class RecipeIngredient(models.Model):
-    # ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
-    volume = models.IntegerField()
+    ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
+    volume = models.IntegerField(default=0)
+    unit = models.CharField(max_length=4, default='g')
+
+    def __str__(self) -> str:
+        return f"{self.ingredient.name} {self.volume}{self.unit}"
 
 class Recipe(models.Model):
-    name = models.CharField(max_length=60)
-    ingredients = models.ManyToManyField(RecipeIngredient)
+    name = models.CharField(max_length=60, unique=True)
+    ingredients = models.ManyToManyField(RecipeIngredient, related_name="recipes")
     piece_factor = models.FloatField(default=0, verbose_name="Avg piece weight")
+
+    def __str__(self) -> str:
+        return f"{self.name}"

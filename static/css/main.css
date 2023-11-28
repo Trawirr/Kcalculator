@@ -67,6 +67,15 @@ body {
     background-repeat: no-repeat;
     background-position: center center; /* Center the background image */
     background-size: cover;
+    z-index: -1;
+}
+
+.volume-input{
+    width: 50px;
+}
+
+.unit-input{
+    width: 110px;
 }
 
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */

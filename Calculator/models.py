@@ -59,6 +59,9 @@ class RecipeIngredient(models.Model):
 
     def __str__(self) -> str:
         return f"{self.ingredient.name} {self.volume}{self.unit}"
+    
+    def get_macro(self) -> dict:
+        return self.ingredient.get_macro(self.volume, self.unit)
 
 class Recipe(models.Model):
     name = models.CharField(max_length=60, unique=True)
@@ -67,3 +70,22 @@ class Recipe(models.Model):
 
     def __str__(self) -> str:
         return f"{self.name}"
+    
+    def get_volume(self):
+        volume = 0
+        for ingredient in self.ingredients:
+            volume += ingredient.volume
+        return volume
+    
+    def get_macro(self) -> dict:
+        values = {
+                "protein": 0,
+                "carbs": 0,
+                "fat": 0,
+                "kcal": 0,
+            }
+        
+        for ingredient in self.ingredients:
+            for k, v in ingredient.ingredient.get_macro().items():
+                values[k] += v
+        return values * 100 / self.get_volume()

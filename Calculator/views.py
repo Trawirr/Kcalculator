@@ -7,7 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 def main_view(request):
     print("Main view")
     context = {
-        "ingredients": [i for i in Ingredient.objects.all().values_list("name", flat=True)] # [f for f in Food.objects.all().values_list("name", flat=True)] + [d for d in Drink.objects.all().values_list("name", flat=True)]
+        "ingredients": [i for i in Ingredient.objects.all().values_list("name", flat=True)] + [r for r in Recipe.objects.all().values_list("name", flat=True)] # [f for f in Food.objects.all().values_list("name", flat=True)] + [d for d in Drink.objects.all().values_list("name", flat=True)]
     }
     print(context)
     return render(request, 'calculator_templates/calculator.html', context)

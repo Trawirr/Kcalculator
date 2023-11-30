@@ -19,7 +19,7 @@ class Ingredient(models.Model):
     def __str__(self) -> str:
         return self.name
 
-    def get_units(self) -> list:
+    def get_units(self) -> list[str]:
         units = [self.default_unit]
         if self.piece_factor > 0: units.append('pc')
         if self.ml_factor > 0 or self.default_unit == 'ml': units += ['ml', 'cup', 'tbsp', 'tsp']
@@ -77,7 +77,12 @@ class Recipe(models.Model):
             volume += ingredient.volume
         return volume
     
-    def get_macro(self) -> dict:
+    def get_units(self) -> list[str]:
+        units = ['g']
+        if self.piece_factor > 0: units.append('pc')
+        return units
+    
+    def get_macro_per_100g(self) -> dict:
         values = {
                 "protein": 0,
                 "carbs": 0,
@@ -89,3 +94,15 @@ class Recipe(models.Model):
             for k, v in ingredient.ingredient.get_macro().items():
                 values[k] += v
         return values * 100 / self.get_volume()
+
+    def get_macro(self, volume, unit) -> dict:
+        values = self.get_macro_per_100g()
+
+        if unit == 'pc':
+            volume *= self.piece_factor
+
+        values['protein'] += self.protein * volume / 100
+        values['carbs'] += self.carbs * volume / 100
+        values['fat'] += self.fat * volume / 100
+        values['kcal'] += self.kcal * volume / 100
+    

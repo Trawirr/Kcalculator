@@ -1,8 +1,9 @@
 from django.db import models
+from django.contrib.auth.models import User
 
-# Create your models here.
 class Ingredient(models.Model):
     name = models.CharField(max_length=50, default="New ingredient")
+
     protein = models.FloatField(default=0, verbose_name="protein/100g_ml")
     carbs = models.FloatField(default=0, verbose_name="carbs/100g_ml")
     fat = models.FloatField(default=0, verbose_name="fat/100g_ml")
@@ -68,6 +69,8 @@ class Recipe(models.Model):
     ingredients = models.ManyToManyField(RecipeIngredient, related_name="recipes")
     piece_factor = models.FloatField(default=0, verbose_name="Avg piece weight")
 
+    recipe_as_ingredient = models.OneToOneField(Ingredient, on_delete=models.CASCADE, null=True, blank=True)
+
     def __str__(self) -> str:
         return f"{self.name}"
     
@@ -106,3 +109,10 @@ class Recipe(models.Model):
         values['fat'] += self.fat * volume / 100
         values['kcal'] += self.kcal * volume / 100
     
+class Meal(RecipeIngredient):
+    pass
+
+class CalendarDay(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="days")
+    date = models.DateField()
+

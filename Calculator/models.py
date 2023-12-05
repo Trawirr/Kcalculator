@@ -76,7 +76,7 @@ class Recipe(models.Model):
     
     def get_volume(self):
         volume = 0
-        for ingredient in self.ingredients:
+        for ingredient in self.ingredients.all():
             volume += ingredient.volume
         return volume
     
@@ -93,10 +93,12 @@ class Recipe(models.Model):
                 "kcal": 0,
             }
         
-        for ingredient in self.ingredients:
-            for k, v in ingredient.ingredient.get_macro().items():
+        for ingredient in self.ingredients.all():
+            for k, v in ingredient.ingredient.get_macro(ingredient.volume, ingredient.unit).items():
                 values[k] += v
-        return values * 100 / self.get_volume()
+        for k, v in values.items():
+            values[k] = round(values[k] * 100 / self.get_volume(), 2)
+        return values
 
     def get_macro(self, volume, unit) -> dict:
         values = self.get_macro_per_100g()

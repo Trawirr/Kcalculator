@@ -64,6 +64,15 @@ def add_recipe(request):
         for recipe_ingredient in recipe_ingredients:
             recipe_ingredient.save()
             new_recipe.ingredients.add(recipe_ingredient)
+
+        recipe_macro = new_recipe.get_macro_per_100g()
+        recipe_as_ingredient = Ingredient(name=f"[R] {new_recipe.name}", 
+                                          protein=recipe_macro['protein'], 
+                                          carbs=recipe_macro['carbs'],
+                                          fat=recipe_macro['fat'],
+                                          kcal=recipe_macro['kcal'],
+                                          piece_factor=new_recipe.piece_factor)
+        recipe_as_ingredient.save()
         return JsonResponse({'success': 1})
     except Exception as e:
         new_recipe.delete()

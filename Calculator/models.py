@@ -52,21 +52,9 @@ class Ingredient(models.Model):
             values['fat'] += self.fat * volume / 100
             values['kcal'] += self.kcal * volume / 100
         return values
-    
-class RecipeIngredient(models.Model):
-    ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
-    volume = models.IntegerField(default=0)
-    unit = models.CharField(max_length=4, default='g')
-
-    def __str__(self) -> str:
-        return f"{self.ingredient.name} {self.volume}{self.unit}"
-    
-    def get_macro(self) -> dict:
-        return self.ingredient.get_macro(self.volume, self.unit)
 
 class Recipe(models.Model):
     name = models.CharField(max_length=60, unique=True)
-    ingredients = models.ManyToManyField(RecipeIngredient, related_name="recipes")
     piece_factor = models.FloatField(default=0, verbose_name="Avg piece weight")
 
     recipe_as_ingredient = models.OneToOneField(Ingredient, on_delete=models.CASCADE, null=True, blank=True)
@@ -111,10 +99,31 @@ class Recipe(models.Model):
         values['fat'] += self.fat * volume / 100
         values['kcal'] += self.kcal * volume / 100
     
-class Meal(RecipeIngredient):
-    pass
+class RecipeIngredient(models.Model):
+    ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
+    volume = models.IntegerField(default=0)
+    unit = models.CharField(max_length=4, default='g')
+    recipe = models.ForeignKey(Recipe, default=None, blank=True, null=True, on_delete=models.CASCADE)
+
+    def __str__(self) -> str:
+        return f"{self.ingredient.name} {self.volume}{self.unit}"
+    
+    def get_macro(self) -> dict:
+        return self.ingredient.get_macro(self.volume, self.unit)
 
 class CalendarDay(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="days")
     date = models.DateField()
+    
+class Meal(RecipeIngredient):
+    MEAL_CHOICES = (
+        ('B', 'Breakfast'),
+        ('L', 'Lunch'),
+        ('D', 'Dinner'),
+        ('d', 'Dessert'),
+        ('S', "Snack"),
+        ('O', 'Other'),
+    )
 
+    meal_type = models.CharField(max_length=1, default='O', choices=MEAL_CHOICES)
+    calendar_day = models.ForeignKey(CalendarDay, on_delete=models.CASCADE, related_name="meals")

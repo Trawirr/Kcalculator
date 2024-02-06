@@ -103,7 +103,7 @@ class RecipeIngredient(models.Model):
     ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
     volume = models.IntegerField(default=0)
     unit = models.CharField(max_length=4, default='g')
-    recipe = models.ForeignKey(Recipe, default=None, blank=True, null=True, on_delete=models.CASCADE)
+    recipe = models.ForeignKey(Recipe, default=None, blank=True, null=True, on_delete=models.CASCADE, related_name='ingredients')
 
     def __str__(self) -> str:
         return f"{self.ingredient.name} {self.volume}{self.unit}"

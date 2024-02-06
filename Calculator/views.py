@@ -55,15 +55,16 @@ def add_recipe(request):
         volumes = [int(v) for v in request.GET.getlist('volumes[]')]
         units = [u for u in request.GET.getlist('units[]')]
 
-        recipe_ingredients = []
+        # recipe_ingredients = []
         for i, ingredient in enumerate(request.GET.getlist("ingredients[]")):
             ingredient_object = get_ingredient(ingredient)
-            new_recipe_ingredient = RecipeIngredient(ingredient=ingredient_object, volume=volumes[i], unit=units[i])
-            recipe_ingredients.append(new_recipe_ingredient)
+            new_recipe_ingredient = RecipeIngredient(recipe=new_recipe, ingredient=ingredient_object, volume=volumes[i], unit=units[i])
+            new_recipe_ingredient.save()
+            # recipe_ingredients.append(new_recipe_ingredient)
 
-        for recipe_ingredient in recipe_ingredients:
-            recipe_ingredient.save()
-            new_recipe.ingredients.add(recipe_ingredient)
+        # for recipe_ingredient in recipe_ingredients:
+        #     recipe_ingredient.save()
+        #     new_recipe.ingredients.add(recipe_ingredient)
 
         recipe_macro = new_recipe.get_macro_per_100g()
         recipe_as_ingredient = Ingredient(name=f"[R] {new_recipe.name}", 
@@ -73,12 +74,11 @@ def add_recipe(request):
                                           kcal=recipe_macro['kcal'],
                                           piece_factor=new_recipe.piece_factor)
         recipe_as_ingredient.save()
+        new_recipe.recipe_as_ingredient = recipe_as_ingredient
+        new_recipe.save()
         return JsonResponse({'success': 1})
     except Exception as e:
         new_recipe.delete()
-        for recipe_ingredient in recipe_ingredients:
-            recipe_ingredient.delete()
-        print(e)
         return JsonResponse({'success': 0, 'error': str(e)})
 
 def get_units(request):

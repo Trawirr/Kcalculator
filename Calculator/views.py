@@ -55,16 +55,10 @@ def add_recipe(request):
         volumes = [int(v) for v in request.GET.getlist('volumes[]')]
         units = [u for u in request.GET.getlist('units[]')]
 
-        # recipe_ingredients = []
         for i, ingredient in enumerate(request.GET.getlist("ingredients[]")):
             ingredient_object = get_ingredient(ingredient)
             new_recipe_ingredient = RecipeIngredient(recipe=new_recipe, ingredient=ingredient_object, volume=volumes[i], unit=units[i])
             new_recipe_ingredient.save()
-            # recipe_ingredients.append(new_recipe_ingredient)
-
-        # for recipe_ingredient in recipe_ingredients:
-        #     recipe_ingredient.save()
-        #     new_recipe.ingredients.add(recipe_ingredient)
 
         recipe_macro = new_recipe.get_macro_per_100g()
         recipe_as_ingredient = Ingredient(name=f"[R] {new_recipe.name}", 

@@ -110,20 +110,3 @@ class RecipeIngredient(models.Model):
     
     def get_macro(self) -> dict:
         return self.ingredient.get_macro(self.volume, self.unit)
-
-class CalendarDay(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="days")
-    date = models.DateField()
-    
-class Meal(RecipeIngredient):
-    MEAL_CHOICES = (
-        ('B', 'Breakfast'),
-        ('L', 'Lunch'),
-        ('D', 'Dinner'),
-        ('d', 'Dessert'),
-        ('S', "Snack"),
-        ('O', 'Other'),
-    )
-
-    meal_type = models.CharField(max_length=1, default='O', choices=MEAL_CHOICES)
-    calendar_day = models.ForeignKey(CalendarDay, on_delete=models.CASCADE, related_name="meals")

@@ -1,0 +1,130 @@
+table {
+    opacity: 80%;
+    width: 100%;
+    margin-left: auto;
+    border-spacing: 10px 5px;
+}
+
+td, th {
+    background-color: #F6F1F1;
+    color: #25221f;
+}
+
+table th {
+    padding: 5px 10px;
+    border: 2px solid black;
+    margin: 5px;
+}
+    
+table td {
+    border: 2px solid black;
+    margin: 5px;
+}
+
+table tr:first-child th:first-child {
+    border: 2px solid black;
+    border-top-left-radius: 10px;
+}
+    
+table tr:first-child th:last-child {
+    border: 2px solid black;
+    border-top-right-radius: 10px;
+}
+
+table tr:last-child td:first-child {
+    border: 2px solid black;
+    border-bottom-left-radius: 10px;
+}
+    
+table tr:last-child td:last-child {
+    border: 2px solid black;
+    border-bottom-right-radius: 10px;
+}
+
+.today {
+    background-color: #dbd7d7;
+}
+
+th:hover, td:hover{
+    background-color: #dbd7d7;
+}
+
+.Breakfast {
+    text-align: center;
+    border-radius: 5px;
+    padding: 4px;
+    margin: 10px auto;
+    width: 80%;
+    background-color: green;
+    color: white;
+    box-shadow: 2px 2px 4px #888888;
+}
+
+.Lunch {
+    text-align: center;
+    border-radius: 5px;
+    padding: 4px;
+    margin: 10px auto;
+    width: 80%;
+    background-color: yellow;
+    box-shadow: 2px 2px 4px #888888;
+}
+
+.Dinner {
+    text-align: center;
+    border-radius: 5px;
+    padding: 4px;
+    margin: 10px auto;
+    width: 80%;
+    background-color: rosybrown;
+    box-shadow: 2px 2px 4px #888888;
+}
+
+.Dessert {
+    text-align: center;
+    border-radius: 5px;
+    padding: 4px;
+    margin: 10px auto;
+    width: 80%;
+    background-color: goldenrod;
+    box-shadow: 2px 2px 4px #888888;
+}
+
+.Snack {
+    text-align: center;
+    border-radius: 5px;
+    padding: 4px;
+    margin: 10px auto;
+    width: 80%;
+    background-color: pink;
+    box-shadow: 2px 2px 4px #888888;
+}
+
+.Other {
+    text-align: center;
+    border-radius: 5px;
+    padding: 4px;
+    margin: 10px auto;
+    width: 80%;
+    background-color: gainsboro;
+    box-shadow: 2px 2px 4px #888888;
+}
+
+.Meal {
+    text-align: center;
+    border-radius: 5px;
+    padding: 4px;
+    margin: 10px auto;
+    width: 80%;
+    color: white;
+    background-color: #216e92;
+    box-shadow: 2px 2px 4px #888888;
+}
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}

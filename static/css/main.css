@@ -3,6 +3,10 @@ body {
     background-color: #F6F1F1;
 }
 
+select{
+    font-family: 'FontAwesome', 'Lato', sans-serif;
+}
+
 .sidebar {
     height: 100%;
     width: 85px;

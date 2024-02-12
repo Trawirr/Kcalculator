@@ -1,22 +1,32 @@
+{% load calendar_tags %}
+
 <h1>Calendar!</h1>
 
 <table>
     <tr>
-        <th>Monday</th>
-        <th>Tuesday</th>
-        <th>Wednesday</th>
-        <th>Thursday</th>
-        <th>Friday</th>
-        <th>Saturday</th>
-        <th>Sunday</th>
+        {% for d in dates %}
+            <th {% if d == today %}class="today"{% endif %}><i style="font-size: small;">{{ d|date:"M d, Y" }}</i><br>{{ d|date:"l" }}</th>
+        {% endfor %}
     </tr>
     <tr>
-        <th>0</th>
-        <th>0</th>
-        <th>0</th>
-        <th>0</th>
-        <th>0</th>
-        <th>0</th>
-        <th>0</th>
+        {% for c in calendar_days %}
+        <td>
+            {% if c is not None %}
+            <div class="breakfast">
+                <span class='material-icons'>breakfast_dining</span><br>
+                {% sum_macro c 'B' %}
+            </div>
+            {% endif %}
+        </td>
+        {% endfor %}
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
+        <td>1</td>
     </tr>
 </table>

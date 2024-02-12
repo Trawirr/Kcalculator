@@ -6,6 +6,9 @@ class CalendarDay(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="days")
     date = models.DateField()
 
+    def count_meals(self, meal_type):
+        return self.meals.filter(meal_type=meal_type).count()
+
     def sum_macro(self, meal_type):
         meals = self.meals.filter(meal_type=meal_type)
         print(f"meals: {meals}")
@@ -35,5 +38,23 @@ class Meal(RecipeIngredient):
         ('O', 'Other'),
     )
 
+    MEAL_ICONS = {
+        'B': 'Breakfast',
+        'L': 'Lunch',
+        'D': 'Dinner',
+        'd': 'Dessert',
+        'S': "Snack",
+        'O': 'Other'
+    }
+
     meal_type = models.CharField(max_length=1, default='O', choices=MEAL_CHOICES)
     calendar_day = models.ForeignKey(CalendarDay, on_delete=models.CASCADE, related_name="meals")
+
+class Activity(models.Model):
+    ACTIVITY_TYPES = (
+        ('W', 'Walk'),
+        ('R', 'Run'),
+        ('C', 'Cycling')
+    )
+
+    kcal = models.FloatField(default=0, verbose_name="kcalories burnt")

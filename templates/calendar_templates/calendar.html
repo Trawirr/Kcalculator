@@ -12,11 +12,15 @@
         {% for c in calendar_days %}
         <td>
             {% if c is not None %}
-                {% for meal_type in meal_types %}
-                <div class="{{ meal_type.1 }}">
-                    <span class='material-icons'>breakfast_dining</span><br>
-                    {% sum_macro c meal_type.0 %}
-                </div>
+                {% for meal_type in meal_types %}   
+                    {% with meal_count=c|count_meals:meal_type.0 %}
+                        {% if meal_count %}
+                        <div class="Meal">
+                            <span class='material-icons'>{% get_icon meal_icons meal_type.0 %}</span><br>
+                            {% sum_macro c meal_type.0 %}
+                        </div>
+                        {% endif %}
+                    {% endwith %}
                 {% endfor %}
             {% endif %}
         </td>
